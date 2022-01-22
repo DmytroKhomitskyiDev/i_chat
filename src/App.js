@@ -8,8 +8,9 @@ import Contact from "./pages/Contact";
 import Notifications from "./pages/Notifications";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
-import Login from "./pages/LoginAndRegistration/Login";
-import Register from "./pages/LoginAndRegistration/Register";
+import Login from "./pages/Auth/Login";
+import Register from "./pages/Auth/Register";
+import RegisterSecret from "./pages/Auth/RegisterSecret";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/registration" element={<Register />} />
+          <Route path="/registration-secret" element={<RegisterSecret />} />
           <Route path="*" element={<NotFound />} />
       </Routes>
   );

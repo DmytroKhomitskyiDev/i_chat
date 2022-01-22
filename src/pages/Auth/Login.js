@@ -1,11 +1,17 @@
 import React from "react";
 import {SAutContainer, SAutForm, SAuthBlock, SButton, SForm} from "./style";
 import {Form, Input} from "antd";
+import { Link, useNavigate } from "react-router-dom";
+import { loginUser } from "../../api/api";
 
-const Register = () => {
+const Login = () => {
+    const navigate = useNavigate()
 
-    const onFinish = (values) => {
-        console.log('Success:', values);
+    const onFinish = async (values) => {
+        const res = await loginUser(values)
+        if (res) {
+            navigate('/chat')
+        }
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -15,8 +21,8 @@ const Register = () => {
         <SAutContainer>
             <SAutForm>
                 <SAuthBlock>
-                    <h2 className="titleSlash">Sign In</h2>
-                    <h2>Sign Up</h2>
+                    <Link to='/login'><h2 className="titleSlash">Sign In</h2></Link>
+                    <Link to='/registration'><h2>Sign Up</h2></Link>
                 </SAuthBlock>
                 <SForm
                     name="basic"
@@ -27,20 +33,8 @@ const Register = () => {
                     layout="vertical"
                 >
                     <Form.Item
-                        name="firstname"
-                        rules={[{ required: true, message: 'Please input your Firs Name' }]}
-                    >
-                        <Input  placeholder="Firs Name" />
-                    </Form.Item>
-                    <Form.Item
-                        name="lastname"
-                        rules={[{ required: true, message: 'Please input your Last Name' }]}
-                    >
-                        <Input  placeholder="Last Name" />
-                    </Form.Item>
-                    <Form.Item
                         name="email"
-                        rules={[{ required: true, message: 'Please input your E-mail' }]}
+                        rules={[{ required: true, message: 'Please input your E-mail!' }]}
                     >
                         <Input  placeholder="E-mail" />
                     </Form.Item>
@@ -60,5 +54,4 @@ const Register = () => {
         </SAutContainer>
     )
 }
-
-export default Register
+export default Login

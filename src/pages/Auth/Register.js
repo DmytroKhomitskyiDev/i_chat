@@ -1,11 +1,25 @@
 import React from "react";
 import {SAutContainer, SAutForm, SAuthBlock, SButton, SForm} from "./style";
 import {Form, Input} from "antd";
+import { Link, useNavigate } from "react-router-dom";
+import { registerUser } from "../../api/api";
+import { useDispatch } from "react-redux";
+import { types } from "../../redux/authReducer"
 
-const Login = () => {
+const Register = () => {
 
-    const onFinish = (values) => {
-        console.log('Success:', values);
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const onFinish = async (values) => {
+        const sendedCode = await registerUser(values.email)
+        if (sendedCode) {
+            dispatch({
+                type: types.SET_REGISTER_USER,
+                payload: values
+            })
+            navigate('/registration-secret')
+        }
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -15,8 +29,8 @@ const Login = () => {
         <SAutContainer>
             <SAutForm>
                 <SAuthBlock>
-                    <h2 className="titleSlash">Sign In</h2>
-                    <h2>Sign Up</h2>
+                    <Link to='/login'><h2 className="titleSlash">Sign In</h2></Link>
+                    <Link to='/registration'><h2>Sign Up</h2></Link>
                 </SAuthBlock>
                 <SForm
                     name="basic"
@@ -27,8 +41,20 @@ const Login = () => {
                     layout="vertical"
                 >
                     <Form.Item
+                        name="firstName"
+                        rules={[{ required: true, message: 'Please input your Firs Name' }]}
+                    >
+                        <Input  placeholder="First Name" />
+                    </Form.Item>
+                    <Form.Item
+                        name="lastName"
+                        rules={[{ required: true, message: 'Please input your Last Name' }]}
+                    >
+                        <Input  placeholder="Last Name" />
+                    </Form.Item>
+                    <Form.Item
                         name="email"
-                        rules={[{ required: true, message: 'Please input your E-mail!' }]}
+                        rules={[{ required: true, message: 'Please input your E-mail' }]}
                     >
                         <Input  placeholder="E-mail" />
                     </Form.Item>
@@ -48,4 +74,5 @@ const Login = () => {
         </SAutContainer>
     )
 }
-export default Login
+
+export default Register
