@@ -2,16 +2,19 @@ import React from "react";
 import {SAutContainer, SAutForm, SAuthBlock, SButton, SForm} from "./style";
 import {Form, Input} from "antd";
 import { Link, useNavigate } from "react-router-dom";
-import { loginUser } from "../../api/api";
+import {findUser, loginUser} from "../../api/api";
 
 const Login = () => {
     const navigate = useNavigate()
 
     const onFinish = async (values) => {
         const res = await loginUser(values)
+
+
         if (res) {
-            navigate('/chat')
+            navigate('/login-secret')
         }
+
     };
 
     const onFinishFailed = (errorInfo) => {

@@ -1,24 +1,26 @@
 import React, {useState} from "react";
 import {SAutContainer, SAutForm, SButton, SForm} from "./style";
 import {Form, Input} from "antd";
-import { registerUserSecret } from "../../api/api";
-import {useSelector} from 'react-redux'
+import {findUser, loginUserSecret, registerUserSecret} from "../../api/api";
 import { useNavigate } from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {types} from "../../redux/types";
 
 const INPUTS = Array.from({ length: 6 })
 
-const RegisterSecret = () => {
+const LoginSecret = () => {
     const [activeInput, setActiveInput] = useState(0)
 
-    const registerUserData = useSelector(state => state.auth.registerData)
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const [form] = Form.useForm();
 
     const onFinish = async (values) => {
-        const created = await registerUserSecret(registerUserData, Object.values(values).join(''))
-        if (created.status === 200) {
-            navigate('/login')
+        const res = await loginUserSecret(Object.values(values).join(''))
+        if (res) {
+            await findUser()
+            navigate('/chat')
         }
     };
 
@@ -63,4 +65,4 @@ const RegisterSecret = () => {
     )
 }
 
-export default RegisterSecret
+export default LoginSecret

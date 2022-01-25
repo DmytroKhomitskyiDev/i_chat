@@ -16,11 +16,12 @@
     "redux": "^4.1.2",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.1",
+    "socket.io-client": "^4.4.1",
     "styled-components": "^5.3.3",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "set PORT=3001 && react-scripts start",
+    "start": "set PORT=4000 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

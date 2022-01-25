@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {SIcon, SSideBar} from "./style";
 import {Link} from "react-router-dom";
 import avatar from "../../images/avatar.png"
@@ -10,6 +10,10 @@ import { ReactComponent as calendar }  from "../../images/icons/sidebar/calendar
 import { ReactComponent as settings }  from "../../images/icons/sidebar/settingsGray.svg"
 import { ReactComponent as shape }   from "../../images/icons/Shape.svg"
 import { ReactComponent as power }  from "../../images/icons/sidebar/power.svg"
+import {useDispatch, useSelector} from "react-redux";
+import {findUser} from "../../api/api";
+import {types} from "../../redux/types";
+import {setCurrentUser} from "../../redux/actions";
 
 const Home = SIcon(home);
 const Chat = SIcon(chat);
@@ -23,13 +27,25 @@ const Power = SIcon(power);
 
 
 const Sidebar = () => {
+
+    const dispatch = useDispatch()
+    const currentUser = useSelector(state => {
+        return state.auth.user
+    })
+
+
+    const logout = () => {
+        localStorage.removeItem('token')
+        localStorage.removeItem('user');
+        dispatch(setCurrentUser({}))
+    }
     return (
         <SSideBar>
             <div className="sidebarTop">
                 <div className="avatarBlock">
                     <img className="avatarImg" src={avatar} alt="avatar"/>
                     <div className="avatarArrow">
-                        <p className="avatarSub">Henry Jabbawockiez</p>
+                        <p className="avatarSub">{`${currentUser.firstName} ${currentUser.lastName}`}</p>
                         <Shape/>
                     </div>
                 </div>
@@ -76,8 +92,8 @@ const Sidebar = () => {
             </div>
             <div className="sidebarBottom">
                 <ul className="navList">
-                    <li>
-                        <Link  to="/login">
+                    <li onClick={logout}>
+                        <Link  to="/login" >
                             <Power className="navImg"/>
                             Log out
                         </Link>

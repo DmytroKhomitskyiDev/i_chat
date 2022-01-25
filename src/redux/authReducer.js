@@ -1,6 +1,5 @@
-export const types = {
-    SET_REGISTER_USER: 'SET_REGISTER_USER'
-}
+import {types} from "./types";
+
 
 export let initialState = {
     registerData: {
@@ -8,7 +7,8 @@ export let initialState = {
         lastName: '',
         password: '',
         email: ''
-    }
+    },
+    user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
 }
 
 const authReducer = (state = initialState, action) => {
@@ -17,6 +17,12 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 registerData: {...action.payload}
+            }
+        }
+        case types.SET_CURREN_USER: {
+            return {
+                ...state,
+                user: action.payload
             }
         }
         default:

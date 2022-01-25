@@ -4,7 +4,7 @@ import {Form, Input} from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../../api/api";
 import { useDispatch } from "react-redux";
-import { types } from "../../redux/authReducer"
+import { types } from "../../redux/types"
 
 const Register = () => {
 
