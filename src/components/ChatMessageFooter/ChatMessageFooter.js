@@ -15,7 +15,7 @@ const SendIcon = sendIcon;
 
 const ChatMessageFooter = ({onFinishMessage,onFinishFailed,form}) => {
     const {startWriting,stopWriting} = useSocket();
-    const roomId = useSelector( state => state.chat.activeRoom)
+    const roomId = useSelector( state => state.chat.activeRoom.id)
 
     return (
         <SChatFooter>

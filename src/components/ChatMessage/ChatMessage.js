@@ -12,6 +12,7 @@ import {SChatMessageHeader, SMessageBody, SMessageContainer} from "./style";
 import ChatMessageFooter from "../ChatMessageFooter/ChatMessageFooter";
 import {Form, Popover} from "antd";
 import PopoverRoom from "../PopoverRoom/PopoverRoom";
+import {setMessages} from "../../redux/actions";
 
 const Paperclip = paperclip;
 const DotsVertical = dotsVertical;
@@ -24,7 +25,6 @@ const ChatMessage = () => {
     const dispatch = useDispatch()
     const [form] = Form.useForm();
 
-    console.log(editMessage)
     const onFinishMessage = async (values) => {
 
         if(editMessage){
@@ -34,12 +34,9 @@ const ChatMessage = () => {
             return
         }
 
-        await sendMessage(chat.activeRoom, values.message, null)
-        getChatMessages(chat.activeRoom, 0, 0).then((data) => {
-            dispatch({
-                type: chatActionTypes.SET_MESSAGES,
-                payload: data.data
-            })
+        await sendMessage(chat.activeRoom.id, values.message, null)
+        getChatMessages(chat.activeRoom.id, 0, 0).then((data) => {
+            dispatch(setMessages(data.data))
         })
         form.resetFields();
     };
@@ -62,7 +59,7 @@ const ChatMessage = () => {
                 <div className="message-header--left">
                     <img src={woman} alt="woman"/>
                     <div className="message-header--name">
-                        <p className="message-header--title">Nika Jerrardo</p>
+                        <p className="message-header--title">Nika Jerrardo {chat.activeRoom.name}</p>
                         <p className="message-header--time">last online 5 hours ago</p>
                     </div>
                 </div>
@@ -70,7 +67,7 @@ const ChatMessage = () => {
                     <div className="message-header--icon">
                         <Paperclip/>
                     </div>
-                    <PopoverRoom chatId={chat.activeRoom}>
+                    <PopoverRoom chatId={chat.activeRoom.id}>
                         <div className="message-header--icon">
                             <DotsVertical/>
                         </div>

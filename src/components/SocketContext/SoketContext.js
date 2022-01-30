@@ -1,7 +1,8 @@
 import React, {createContext, useContext, useEffect, useRef} from "react";
 import {io} from "socket.io-client";
 import socketActions from "./soketActions";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {addRoom, removeRoom, setActiveRoom, setMessages} from "../../redux/actions";
 
 
 
@@ -14,8 +15,7 @@ export const useSocket = () => {
 const SocketProvider= ({ children }) => {
 
     const socket = useRef(null);
-
-
+    const dispatch = useDispatch();
 
     const currentUser = useSelector(state => state.auth.user)
 
@@ -32,8 +32,14 @@ const SocketProvider= ({ children }) => {
 
         socket.current.on(socketActions.ClientCreateRoom, (room) => {
             socket.current?.emit(socketActions.ServerJoinRoom, room.id);
-            console.log(room)
+            dispatch(addRoom(room))
+            dispatch(setActiveRoom(room))
+            dispatch(setMessages([]))
         });
+
+        socket.current.on(socketActions.ClientDeleteRoom, (id) => {
+            dispatch(removeRoom(id))
+        })
 
         return () => {
             socket.current.disconnect();

@@ -3,6 +3,7 @@ import {Button, Popover} from "antd";
 import {useSocket} from "../SocketContext/SoketContext";
 import {useDispatch} from "react-redux";
 import {chatActionTypes} from "../../redux/types";
+import {removeRoom} from "../../redux/actions";
 
 const PopoverRoom = ({children,chatId}) => {
     const { deleteRoom} = useSocket();
@@ -11,10 +12,6 @@ const PopoverRoom = ({children,chatId}) => {
 
     const handleRemoveRoom = async (chatId) => {
         await deleteRoom(chatId)
-        dispatch({
-            type: chatActionTypes.REMOVE_ACTIVE_ROOM,
-            payload: chatId
-        })
     }
     const content = (
         <div>

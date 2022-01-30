@@ -4,7 +4,7 @@ import {chatActionTypes} from "./types";
 export let initialState = {
     messages: [],
     rooms: [],
-    activeRoom: ''
+    activeRoom: null
 }
 
 const chatReducer = (state = initialState, action) => {
@@ -21,11 +21,23 @@ const chatReducer = (state = initialState, action) => {
                 activeRoom: action.payload
             }
         }
-        case chatActionTypes.REMOVE_ACTIVE_ROOM: {
+        case chatActionTypes.REMOVE_ROOM: {
             return {
                 ...state,
-                rooms: state.rooms.filter((room, roomId) => roomId !== action.payload),
-                activeRoom: ''
+                rooms: state.rooms.filter((room) => room.id !== action.payload),
+                activeRoom: null
+            }
+        }
+        case chatActionTypes.SET_ROOMS: {
+            return {
+                ...state,
+                rooms: [...action.payload]
+            }
+        }
+        case chatActionTypes.ADD_ROOM: {
+            return {
+                ...state,
+                rooms: [...state.rooms, action.payload]
             }
         }
         default:

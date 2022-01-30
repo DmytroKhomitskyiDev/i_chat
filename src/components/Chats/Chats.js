@@ -10,20 +10,20 @@ import {getChatMessages, getChatRooms} from "../../api/api";
 import ChatModal from "../ChatModal/ChatModal";
 import {useDispatch, useSelector} from "react-redux";
 import {chatActionTypes} from "../../redux/types";
+import {addRoom, setActiveRoom, setMessages, setRooms} from "../../redux/actions";
 
 const Chats = () => {
 
     const {createRoom, joinRoom} = useSocket();
-    const [rooms, setRooms] = useState([]);
-    const [activeRoom, setActiveRoom] = useState();
     const [isModalVisible, setIsModalVisible] = useState(false);
 
     const dispatch = useDispatch()
     const currentUser = useSelector( state => state.auth.user)
+    const {rooms, activeRoom} = useSelector( state => state.chat)
 
     useEffect(() => {
         getChatRooms(0, 0).then((data) => {
-            setRooms(data.data)
+            dispatch(setRooms(data.data))
         })
     }, [])
 
@@ -34,9 +34,8 @@ const Chats = () => {
 
     const onFinish = async (values) => {
         try {
-            const data = await createRoom([currentUser?.email, values.email], '', values.chatName)
-            setActiveRoom(data?.id)
-            console.log('Success:', values);
+            await createRoom([currentUser?.email, values.email], '', values.chatName)
+
             handleCancel()
         } catch (e) {
             console.log(e)
@@ -48,23 +47,15 @@ const Chats = () => {
         setIsModalVisible(false);
     };
 
+    const handleRoomClick = async (room) => {
+        dispatch(setActiveRoom(room))
 
-    const handleGetMessages = async (id) => {
-        dispatch({
-            type: chatActionTypes.SET_ACTIVE_ROOM,
-            payload: id
-        })
-
-        setActiveRoom(id)
-
-        await joinRoom(id)
-        getChatMessages(id, 0, 0).then((data) => {
-            dispatch({
-                type: chatActionTypes.SET_MESSAGES,
-                payload: data.data
-            })
+        await joinRoom(room.id)
+        getChatMessages(room.id, 0, 0).then((data) => {
+            dispatch(setMessages(data.data))
         })
     }
+
     return (
         <>
             <ChatModal onFinish={onFinish} showModal={showModal}  handleCancel={handleCancel} isModalVisible={isModalVisible}/>
@@ -86,7 +77,7 @@ const Chats = () => {
                     {
                         rooms.map((room) => {
                             return (
-                                <SChatBlock key={room.id} onClick={() => handleGetMessages(room.id)} className={activeRoom === room.id ? 'activeBlock' : ''}>
+                                <SChatBlock key={room.id} onClick={() => handleRoomClick(room)} className={activeRoom && activeRoom.id === room.id ? 'activeBlock' : ''}>
                                     <ChatRoom room={room} />
                                 </SChatBlock>
                             )
