@@ -1,4 +1,4 @@
-import {types} from "./types";
+import {authActionTypes} from "./types";
 
 
 export let initialState = {
@@ -13,13 +13,13 @@ export let initialState = {
 
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
-        case types.SET_REGISTER_USER: {
+        case authActionTypes.SET_REGISTER_USER: {
             return {
                 ...state,
                 registerData: {...action.payload}
             }
         }
-        case types.SET_CURREN_USER: {
+        case authActionTypes.SET_CURREN_USER: {
             return {
                 ...state,
                 user: action.payload

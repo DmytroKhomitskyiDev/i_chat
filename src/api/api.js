@@ -55,6 +55,18 @@ export const findUser = async () => {
     }
 }
 
+export const getChatRooms = async (start, howMany) => {
+    return axios.get(`${baseUrl}/chat-list/${start}/${howMany}`,{headers: {
+        'Authorization': localStorage.getItem("token")
+    }})
+}
+
+export const getChatMessages = async (chatId, start, howMany) => {
+    return axios.get(`${baseUrl}/chat-room/${chatId}/${start}/${howMany}`,{headers: {
+        'Authorization': localStorage.getItem("token")
+    }})
+}
+
 // export const getChannels = async () => {
 //     const res = await axios.get(`${baseUrl}/chat-list/1/10`, {headers: {
 //         'Authorization': localStorage.getItem("token")

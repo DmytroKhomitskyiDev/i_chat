@@ -1,22 +1,26 @@
-// import { useEffect, useRef, useState } from 'react'
-// import io from 'socket.io-client'
-//
-// const SERVER_URL = 'http://localhost:3000'
-//
-// export const useChatRooms = (start, howMany) => {
-//     const [rooms, setRooms] = useState([])
-//
-//     const socketRef = useRef(null)
-//
-//     useEffect(() => {
-//         socketRef.current = io(`${SERVER_URL}`, {
-//             path: `/chat-list/${start}/${howMany}`,
-//             transports: ['websocket'],
-//             extraHeaders: {
-//                 Authorization: localStorage.getItem("token")
-//             }
-//         })
-//         console.log(socketRef.current)
+import { useEffect, useRef, useState } from 'react'
+import io from 'socket.io-client'
+
+const SERVER_URL = 'http://localhost:3001'
+
+export const useChatRooms = (start, howMany) => {
+    const [rooms, setRooms] = useState([])
+
+    const socketRef = useRef(null)
+
+    useEffect(() => {
+        socketRef.current = io(`${SERVER_URL}`, {
+            cors: {
+                origin: "http://localhost:3001",
+                credentials: true
+            },
+            path: ``,
+            transports: ['websocket'],
+            auth: {
+                token: localStorage.getItem("token")
+            }
+        })
+        console.log(socketRef.current)
 
         // // отправляем событие добавления пользователя,
         // // в качестве данных передаем объект с именем и id пользователя
@@ -43,11 +47,11 @@
         //     // обновляем массив сообщений
         //     setMessages(newMessages)
         // })
-    //
-    //     return () => {
-    //         socketRef.current.disconnect()
-    //     }
-    // }, [start, howMany])
+
+        return () => {
+            socketRef.current.disconnect()
+        }
+    }, [start, howMany])
 
     // // функция отправки сообщения
     // // принимает объект с текстом сообщения и именем отправителя
@@ -71,5 +75,5 @@
     // })
 
     // хук возвращает пользователей, сообщения и функции для отправки удаления сообщений
-    // return { rooms }
-// }
+    return { rooms }
+}

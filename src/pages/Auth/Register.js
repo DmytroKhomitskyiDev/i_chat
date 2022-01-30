@@ -4,7 +4,7 @@ import {Form, Input} from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../../api/api";
 import { useDispatch } from "react-redux";
-import { types } from "../../redux/types"
+import { authActionTypes } from "../../redux/types"
 
 const Register = () => {
 
@@ -15,11 +15,12 @@ const Register = () => {
         const sendedCode = await registerUser(values.email)
         if (sendedCode) {
             dispatch({
-                type: types.SET_REGISTER_USER,
+                type: authActionTypes.SET_REGISTER_USER,
                 payload: values
             })
             navigate('/registration-secret')
         }
+
     };
 
     const onFinishFailed = (errorInfo) => {

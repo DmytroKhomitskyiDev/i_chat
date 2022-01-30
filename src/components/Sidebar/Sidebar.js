@@ -12,7 +12,7 @@ import { ReactComponent as shape }   from "../../images/icons/Shape.svg"
 import { ReactComponent as power }  from "../../images/icons/sidebar/power.svg"
 import {useDispatch, useSelector} from "react-redux";
 import {findUser} from "../../api/api";
-import {types} from "../../redux/types";
+import {authActionTypes} from "../../redux/types";
 import {setCurrentUser} from "../../redux/actions";
 
 const Home = SIcon(home);

@@ -1,34 +1,15 @@
-import React, {useEffect, useState} from "react";
-import {findUser} from "../../api/api";
-import {useDispatch} from "react-redux";
-import {types} from "../../redux/types";
-import {SChatContainer} from "./style";
-import {Button} from "antd";
+import React from "react";
+import { SChatContainer} from "./style";
+import Chats from "../../components/Chats/Chats";
+import ChatMessage from "../../components/ChatMessage/ChatMessage";
 
-const Chat = () => {
-    // const {rooms} = useChatRooms(1, 1)
-
-
-
+const ChatContainer = () => {
     return(
         <SChatContainer>
-            <div className="chatAdd">
-                <div className="chatAdd-BlockTitle">
-                    <div className="BlockTitle_left">
-                        <h3 className="chatTitle">Chats</h3>
-                        <p className="chatSubTitle">Recent Chats</p>
-                    </div>
-                    <div className="BlockTitle_right">
-                        <Button className="BlockTitle_button">
-                            <img src="" alt=""/>
-                            Create new Chat
-                        </Button>
-                    </div>
-                </div>
-            </div>
-            <div className="chatMessage"></div>
+           <Chats />
+           <ChatMessage />
         </SChatContainer>
     )
 }
 
-export default Chat
+export default ChatContainer

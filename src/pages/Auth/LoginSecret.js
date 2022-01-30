@@ -4,7 +4,7 @@ import {Form, Input} from "antd";
 import {findUser, loginUserSecret, registerUserSecret} from "../../api/api";
 import { useNavigate } from "react-router-dom";
 import {useDispatch} from "react-redux";
-import {types} from "../../redux/types";
+import {authActionTypes} from "../../redux/types";
 
 const INPUTS = Array.from({ length: 6 })
 

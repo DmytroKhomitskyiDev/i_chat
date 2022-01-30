@@ -7,13 +7,16 @@ import {Provider} from "react-redux";
 import store from "./redux/store";
 import 'antd/dist/antd.css';
 import GlobalStyles from "./styles/GlobalStyles";
+import SoketContext from "./components/SocketContext/SoketContext";
 
 ReactDOM.render(
     <>
         <GlobalStyles/>
         <BrowserRouter>
             <Provider store={store}>
-                <App />
+                <SoketContext>
+                    <App />
+                </SoketContext>
             </Provider>
         </BrowserRouter>
     </>,
