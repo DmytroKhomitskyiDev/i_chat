@@ -34,3 +34,13 @@ export const addRoom = (data) => ({
     type: chatActionTypes.ADD_ROOM,
     payload: data
 })
+
+export const editMessage = (data) => ({
+    type: chatActionTypes.EDIT_MESSAGE,
+    payload: data
+})
+
+export const removeMessage = (data) => ({
+    type: chatActionTypes.REMOVE_MESSAGE,
+    payload: data
+})

@@ -2,7 +2,16 @@ import React, {createContext, useContext, useEffect, useRef} from "react";
 import {io} from "socket.io-client";
 import socketActions from "./soketActions";
 import {useDispatch, useSelector} from "react-redux";
-import {addRoom, removeRoom, setActiveRoom, setMessages} from "../../redux/actions";
+import {
+    addMessage,
+    addRoom,
+    editMessage,
+    removeMessage,
+    removeRoom,
+    setActiveRoom,
+    setMessages
+} from "../../redux/actions";
+import {getChatMessages} from "../../api/api";
 
 
 
@@ -40,6 +49,20 @@ const SocketProvider= ({ children }) => {
         socket.current.on(socketActions.ClientDeleteRoom, (id) => {
             dispatch(removeRoom(id))
         })
+
+        socket.current.on(socketActions.ClientMessage, (message) => {
+            getChatMessages(message.room, 0, 0).then((data) => {
+                dispatch(setMessages(data.data))
+            })
+        });
+
+        socket.current.on(socketActions.ClientUpdate, (message) => {
+            dispatch(editMessage(message))
+        });
+
+        socket.current.on(socketActions.ClientDeleteMessage, (id) => {
+            dispatch(removeMessage(id))
+        });
 
         return () => {
             socket.current.disconnect();

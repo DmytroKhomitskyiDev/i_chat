@@ -22,7 +22,6 @@ const ChatMessage = () => {
     const {sendMessage, joinRoom,updateMessageSocket} = useSocket();
     const chat = useSelector(state => state.chat)
     const [editMessage,setEditMessage] = useState(null)
-    const dispatch = useDispatch()
     const [form] = Form.useForm();
 
     const onFinishMessage = async (values) => {
@@ -35,9 +34,7 @@ const ChatMessage = () => {
         }
 
         await sendMessage(chat.activeRoom.id, values.message, null)
-        getChatMessages(chat.activeRoom.id, 0, 0).then((data) => {
-            dispatch(setMessages(data.data))
-        })
+
         form.resetFields();
     };
 

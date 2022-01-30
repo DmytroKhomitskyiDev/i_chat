@@ -40,6 +40,23 @@ const chatReducer = (state = initialState, action) => {
                 rooms: [...state.rooms, action.payload]
             }
         }
+        case chatActionTypes.EDIT_MESSAGE: {
+            return {
+                ...state,
+                messages: state.messages.map(msg => {
+                    console.log(msg)
+                    if (msg.id === action.payload.id) msg.text = action.payload.text
+
+                    return msg
+                })
+            }
+        }
+        case chatActionTypes.REMOVE_MESSAGE: {
+            return {
+                ...state,
+                messages: state.messages.filter((msg) => msg.id !== action.payload)
+            }
+        }
         default:
             return state
     }
