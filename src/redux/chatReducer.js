@@ -4,7 +4,8 @@ import {chatActionTypes} from "./types";
 export let initialState = {
     messages: [],
     rooms: [],
-    activeRoom: null
+    activeRoom: null,
+    typingIn: null
 }
 
 const chatReducer = (state = initialState, action) => {
@@ -57,6 +58,18 @@ const chatReducer = (state = initialState, action) => {
             return {
                 ...state,
                 messages: state.messages.filter((msg) => msg.id !== action.payload)
+            }
+        }
+        case chatActionTypes.SET_TYPING: {
+            return {
+                ...state,
+                typingIn: {...action.payload}
+            }
+        }
+        case chatActionTypes.CLEAR_TYPING: {
+            return {
+                ...state,
+                typingIn: null
             }
         }
         default:

@@ -44,3 +44,12 @@ export const removeMessage = (data) => ({
     type: chatActionTypes.REMOVE_MESSAGE,
     payload: data
 })
+
+export const setTyping = (data) => ({
+    type: chatActionTypes.SET_TYPING,
+    payload: data
+})
+
+export const clearTyping = () => ({
+    type: chatActionTypes.CLEAR_TYPING
+})

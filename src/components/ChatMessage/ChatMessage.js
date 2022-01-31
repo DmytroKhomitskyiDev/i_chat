@@ -20,10 +20,9 @@ const DotsVertical = dotsVertical;
 
 const ChatMessage = () => {
     const {sendMessage,updateMessageSocket} = useSocket();
-    const chat = useSelector(state => state.chat)
+    const { activeRoom, typingIn, messages } = useSelector(state => state.chat)
     const [editMessage,setEditMessage] = useState(null)
     const [form] = Form.useForm();
-
 
 
     const onFinishMessage = async (values) => {
@@ -35,7 +34,7 @@ const ChatMessage = () => {
             return
         }
 
-        await sendMessage(chat.activeRoom.id, values.message, null)
+        await sendMessage(activeRoom.id, values.message, null)
 
         form.resetFields();
     };
@@ -61,15 +60,16 @@ const ChatMessage = () => {
                 <div className="message-header--left">
                     <img src={woman} alt="woman"/>
                     <div className="message-header--name">
-                        <p className="message-header--title">Nika Jerrardo {chat.activeRoom.name}</p>
-                        <p className="message-header--time">{chat.activeRoom.online ? 'online' : `${dateAgo(new Date())}`}</p>
+                        <p className="message-header--title">Nika Jerrardo {activeRoom.name} </p>
+                        <p className="message-header--time">{activeRoom.online ? 'online' : `${dateAgo(new Date())}`}</p>
+                        <p className="message-header--time"><i>{typingIn && activeRoom.id === typingIn.room && '...typing'}</i></p>
                     </div>
                 </div>
                 <div className="message-header--right">
                     <div className="message-header--icon">
                         <Paperclip/>
                     </div>
-                    <PopoverRoom chatId={chat.activeRoom.id}>
+                    <PopoverRoom chatId={activeRoom.id}>
                         <div className="message-header--icon">
                             <DotsVertical/>
                         </div>
@@ -79,7 +79,7 @@ const ChatMessage = () => {
             <SMessageBody>
                 <div className="messageBody--top">
                     {
-                        chat.messages.map(message => {
+                        messages.map(message => {
                             return message.type === 'user' ? (
                                 <div key={message.id}>
                                     <MyMessage message={message} setEditMessage={handleEditMessage}/>

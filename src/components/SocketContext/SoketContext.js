@@ -4,12 +4,12 @@ import socketActions from "./soketActions";
 import {useDispatch, useSelector} from "react-redux";
 import {
     addMessage,
-    addRoom,
+    addRoom, clearTyping,
     editMessage,
     removeMessage,
     removeRoom,
     setActiveRoom,
-    setMessages
+    setMessages, setTyping
 } from "../../redux/actions";
 import {getChatMessages} from "../../api/api";
 
@@ -67,14 +67,15 @@ const SocketProvider= ({ children }) => {
         });
 
         socket.current.on(socketActions.ClientStartWriting, (res) => {
-            // if(res.user !== currentUser.id)
-            console.log('start write', res)
-
+            if(res.user !== currentUser.id) {
+                dispatch(setTyping(res))
+            }
         });
 
         socket.current.on(socketActions.ClientStopWriting, (res) => {
-            // if(res.user !== currentUser.id)
-            console.log('stop write', res)
+            if(res.user !== currentUser.id) {
+                dispatch(clearTyping())
+            }
         });
 
         return () => {

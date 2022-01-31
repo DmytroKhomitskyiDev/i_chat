@@ -11,5 +11,7 @@ export const chatActionTypes = {
     ADD_ROOM: 'ADD_ROOM',
     EDIT_MESSAGE: 'EDIT_MESSAGE',
     REMOVE_MESSAGE: 'REMOVE_MESSAGE',
+    SET_TYPING: 'SET_TYPING',
+    CLEAR_TYPING: 'CLEAR_TYPING',
 
 }

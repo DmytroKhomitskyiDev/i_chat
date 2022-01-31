@@ -22,10 +22,10 @@ const Chats = () => {
     const {rooms, activeRoom} = useSelector( state => state.chat)
 
     useEffect(() => {
+        fetchRooms()
+
         const interval = setInterval(() => {
-            getChatRooms(0, 0).then((data) => {
-                dispatch(setRooms(data.data))
-            })
+            fetchRooms()
         }, 10000)
 
         return () => {
@@ -33,6 +33,11 @@ const Chats = () => {
         }
     }, [])
 
+    const fetchRooms = () => {
+        getChatRooms(0, 0).then((data) => {
+            dispatch(setRooms(data.data))
+        })
+    }
 
     const showModal = () => {
         setIsModalVisible(true);
