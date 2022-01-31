@@ -5,7 +5,7 @@ export const SMyMessage = styled.div`
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 35px;
   
   .my-dots, .my--messageBlock{
     margin-right: 14px;
@@ -19,6 +19,15 @@ export const SMyMessage = styled.div`
     border-radius: 10px 10px 0px 10px;
     max-width: 520px;
     word-break: break-all;
+    position: relative;
+  }
+  .abs_date{
+    position: absolute;
+    width: max-content;
+    bottom: -27px;
+    right: 0;
+    color: rgba(112, 124, 151, 0.7);
+    font-size: 14px;
   }
   .my--message{
     font-size: 16px;

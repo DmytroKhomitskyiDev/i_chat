@@ -22,9 +22,15 @@ const Chats = () => {
     const {rooms, activeRoom} = useSelector( state => state.chat)
 
     useEffect(() => {
-        getChatRooms(0, 0).then((data) => {
-            dispatch(setRooms(data.data))
-        })
+        const interval = setInterval(() => {
+            getChatRooms(0, 0).then((data) => {
+                dispatch(setRooms(data.data))
+            })
+        }, 10000)
+
+        return () => {
+            clearInterval(interval)
+        }
     }, [])
 
 

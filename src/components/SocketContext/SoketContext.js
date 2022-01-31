@@ -28,6 +28,8 @@ const SocketProvider= ({ children }) => {
 
     const currentUser = useSelector(state => state.auth.user)
 
+
+
     useEffect(() => {
         socket.current = io('http://localhost:3001', {
             auth: {
@@ -36,7 +38,7 @@ const SocketProvider= ({ children }) => {
         });
 
         socket.current.on(socketActions.ClientConnection, (res) => {
-            console.log(res);
+            console.log('connection: ' , res);
         });
 
         socket.current.on(socketActions.ClientCreateRoom, (room) => {
@@ -62,6 +64,17 @@ const SocketProvider= ({ children }) => {
 
         socket.current.on(socketActions.ClientDeleteMessage, (id) => {
             dispatch(removeMessage(id))
+        });
+
+        socket.current.on(socketActions.ClientStartWriting, (res) => {
+            // if(res.user !== currentUser.id)
+            console.log('start write', res)
+
+        });
+
+        socket.current.on(socketActions.ClientStopWriting, (res) => {
+            // if(res.user !== currentUser.id)
+            console.log('stop write', res)
         });
 
         return () => {

@@ -12,17 +12,19 @@ import {SChatMessageHeader, SMessageBody, SMessageContainer} from "./style";
 import ChatMessageFooter from "../ChatMessageFooter/ChatMessageFooter";
 import {Form, Popover} from "antd";
 import PopoverRoom from "../PopoverRoom/PopoverRoom";
-import {setMessages} from "../../redux/actions";
+import moment from "moment";
 
 const Paperclip = paperclip;
 const DotsVertical = dotsVertical;
 
 
 const ChatMessage = () => {
-    const {sendMessage, joinRoom,updateMessageSocket} = useSocket();
+    const {sendMessage,updateMessageSocket} = useSocket();
     const chat = useSelector(state => state.chat)
     const [editMessage,setEditMessage] = useState(null)
     const [form] = Form.useForm();
+
+
 
     const onFinishMessage = async (values) => {
 
@@ -49,6 +51,9 @@ const ChatMessage = () => {
         setEditMessage(data)
     }
 
+    const dateAgo = (data) => {
+        return moment(data).fromNow();
+    }
 
     return (
         <SMessageContainer>
@@ -57,7 +62,7 @@ const ChatMessage = () => {
                     <img src={woman} alt="woman"/>
                     <div className="message-header--name">
                         <p className="message-header--title">Nika Jerrardo {chat.activeRoom.name}</p>
-                        <p className="message-header--time">last online 5 hours ago</p>
+                        <p className="message-header--time">{chat.activeRoom.online ? 'online' : `${dateAgo(new Date())}`}</p>
                     </div>
                 </div>
                 <div className="message-header--right">
@@ -77,7 +82,7 @@ const ChatMessage = () => {
                         chat.messages.map(message => {
                             return message.type === 'user' ? (
                                 <div key={message.id}>
-                                    <MyMessage message={message}  setEditMessage={handleEditMessage}/>
+                                    <MyMessage message={message} setEditMessage={handleEditMessage}/>
                                 </div>
 
                             ) : (

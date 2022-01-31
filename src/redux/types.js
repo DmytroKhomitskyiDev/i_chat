@@ -10,5 +10,6 @@ export const chatActionTypes = {
     SET_ROOMS: 'SET_ROOMS',
     ADD_ROOM: 'ADD_ROOM',
     EDIT_MESSAGE: 'EDIT_MESSAGE',
-    REMOVE_MESSAGE: 'REMOVE_MESSAGE'
+    REMOVE_MESSAGE: 'REMOVE_MESSAGE',
+
 }

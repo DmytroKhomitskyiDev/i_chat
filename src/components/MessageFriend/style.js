@@ -19,6 +19,15 @@ export const SFriendMessage = styled.div`
     max-width: 520px;
     margin-right: 15px;
     word-break: break-all;
+    position: relative;
+  }
+  .abs_date{
+    position: absolute;
+    width: max-content;
+    bottom: -27px;
+    right: 0;
+    color: rgba(112, 124, 151, 0.7);
+    font-size: 14px;
   }
   .messageBody--text{
     font-size: 16px;

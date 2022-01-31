@@ -31,7 +31,10 @@ const chatReducer = (state = initialState, action) => {
         case chatActionTypes.SET_ROOMS: {
             return {
                 ...state,
-                rooms: [...action.payload]
+                rooms: [...action.payload],
+                activeRoom: state.activeRoom
+                    ? action.payload.find(room => room.id === state.activeRoom.id)
+                    : null
             }
         }
         case chatActionTypes.ADD_ROOM: {
@@ -46,7 +49,6 @@ const chatReducer = (state = initialState, action) => {
                 messages: state.messages.map(msg => {
                     console.log(msg)
                     if (msg.id === action.payload.id) msg.text = action.payload.text
-
                     return msg
                 })
             }

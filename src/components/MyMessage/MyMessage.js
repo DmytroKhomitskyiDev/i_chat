@@ -2,15 +2,16 @@ import React from "react";
 import {ReactComponent as checkmark} from "../../images/message/checkmark.svg";
 import {ReactComponent as dots} from "../../images/message/dots.svg";
 import {SMyMessage} from "./style";
-import {Button, Popover} from "antd";
-import {useSocket} from "../SocketContext/SoketContext";
 import MessagePopover from "../MessagePopover/MessagePopover";
 
 const Checkmark = checkmark;
 const Dots = dots;
 
 const MyMessage = ({message,setEditMessage}) => {
-
+    const date = (date) => {
+       const dateToDay = new Date(date)
+       return `${dateToDay.getHours()} : ${dateToDay.getMinutes()}`
+    }
     return (
         <SMyMessage>
             <div className="messageBody--dots my-dots">
@@ -20,6 +21,7 @@ const MyMessage = ({message,setEditMessage}) => {
             </div>
             <div className="my--messageBlock">
                 <p className="my--message">{message.text}</p>
+                <span className="abs_date">{date(message.date)}</span>
             </div>
             <Checkmark/>
         </SMyMessage>
