@@ -5,7 +5,9 @@ export let initialState = {
     messages: [],
     rooms: [],
     activeRoom: null,
-    typingIn: null
+    typingIn: null,
+    messageStatus: null,
+    online: {}
 }
 
 const chatReducer = (state = initialState, action) => {
@@ -48,7 +50,6 @@ const chatReducer = (state = initialState, action) => {
             return {
                 ...state,
                 messages: state.messages.map(msg => {
-                    console.log(msg)
                     if (msg.id === action.payload.id) msg.text = action.payload.text
                     return msg
                 })
@@ -70,6 +71,24 @@ const chatReducer = (state = initialState, action) => {
             return {
                 ...state,
                 typingIn: null
+            }
+        }
+        case chatActionTypes.MESSAGE_STATUS: {
+            return {
+                ...state,
+                messageStatus: {...action.payload}
+            }
+        }
+        case chatActionTypes.SET_ONLINE: {
+            return {
+                ...state,
+                online: {...action.payload}
+            }
+        }
+        case chatActionTypes.SET_ONLINE: {
+            return {
+                ...state,
+                online: null
             }
         }
         default:

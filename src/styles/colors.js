@@ -8,7 +8,8 @@ const colors = {
     SVG: '#707C97',
     BLACK: '#000000',
     SCROLL: '#B7BDCB',
-    GRAY_2: '#FAFBFF'
+    GRAY_2: '#FAFBFF',
+    BLUE_ICON: '#2A8BF2'
 }
 
 export default colors

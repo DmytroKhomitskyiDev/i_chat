@@ -3,13 +3,12 @@ import {io} from "socket.io-client";
 import socketActions from "./soketActions";
 import {useDispatch, useSelector} from "react-redux";
 import {
-    addMessage,
     addRoom, clearTyping,
-    editMessage,
+    editMessage, messageStatus,
     removeMessage,
     removeRoom,
     setActiveRoom,
-    setMessages, setTyping
+    setMessages, setOffline, setOnline, setTyping
 } from "../../redux/actions";
 import {getChatMessages} from "../../api/api";
 
@@ -39,6 +38,14 @@ const SocketProvider= ({ children }) => {
 
         socket.current.on(socketActions.ClientConnection, (res) => {
             console.log('connection: ' , res);
+        });
+
+        socket.current.on(socketActions.ClientJoin, (res) => {
+            if (res.email && currentUser?.email !== res.email) setOnline(res)
+        });
+
+        socket.current.on(socketActions.ClientLeave, (res) => {
+            if (res.email && currentUser?.email !== res.email) setOffline(res)
         });
 
         socket.current.on(socketActions.ClientCreateRoom, (room) => {
@@ -75,6 +82,12 @@ const SocketProvider= ({ children }) => {
         socket.current.on(socketActions.ClientStopWriting, (res) => {
             if(res.user !== currentUser.id) {
                 dispatch(clearTyping())
+            }
+        });
+
+        socket.current.on(socketActions.ClientReadMessage, (res) => {
+            if(res.user !== currentUser.id) {
+                dispatch(messageStatus(res))
             }
         });
 
@@ -132,6 +145,12 @@ const SocketProvider= ({ children }) => {
         });
     };
 
+    const readMessage = (roomId) => {
+        socket.current?.emit(socketActions.ServerReadMessage, {
+            id: roomId,
+        });
+    };
+
     const value = {
         createRoom,
         joinRoom,
@@ -140,7 +159,8 @@ const SocketProvider= ({ children }) => {
         updateMessageSocket,
         deleteRoom,
         startWriting,
-        stopWriting
+        stopWriting,
+        readMessage
     };
 
     return (

@@ -18,6 +18,7 @@ export const SChatMessageHeader = styled.div`
   
   .message-header--left{
     display: flex;
+    align-items: flex-start;
     
     img{
       border-radius: 50%;

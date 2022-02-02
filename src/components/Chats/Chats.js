@@ -9,7 +9,6 @@ import {useSocket} from "../SocketContext/SoketContext";
 import {getChatMessages, getChatRooms} from "../../api/api";
 import ChatModal from "../ChatModal/ChatModal";
 import {useDispatch, useSelector} from "react-redux";
-import {chatActionTypes} from "../../redux/types";
 import {addRoom, setActiveRoom, setMessages, setRooms} from "../../redux/actions";
 
 const Chats = () => {
@@ -21,16 +20,20 @@ const Chats = () => {
     const currentUser = useSelector( state => state.auth.user)
     const {rooms, activeRoom} = useSelector( state => state.chat)
 
+    const online  = useSelector( state => state.chat.online)
+
+    console.log(online)
+
     useEffect(() => {
         fetchRooms()
 
-        const interval = setInterval(() => {
-            fetchRooms()
-        }, 10000)
-
-        return () => {
-            clearInterval(interval)
-        }
+        // const interval = setInterval(() => {
+        //     fetchRooms()
+        // }, 10000)
+        //
+        // return () => {
+        //     clearInterval(interval)
+        // }
     }, [])
 
     const fetchRooms = () => {

@@ -53,3 +53,16 @@ export const setTyping = (data) => ({
 export const clearTyping = () => ({
     type: chatActionTypes.CLEAR_TYPING
 })
+
+export const messageStatus = (data) => ({
+    type: chatActionTypes.MESSAGE_STATUS,
+    payload: data
+})
+
+export const setOnline = (data) => ({
+    type: chatActionTypes.SET_ONLINE,
+    payload: data
+})
+export const setOffline = () => ({
+    type: chatActionTypes.SET_OFFLINE
+})

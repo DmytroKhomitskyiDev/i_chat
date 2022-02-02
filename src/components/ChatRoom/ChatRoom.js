@@ -1,13 +1,10 @@
 import React from "react";
 import woman from "../../images/24.png"
 import online from "../../images/Ellipse.png"
-import moment from 'moment';
+import {getDateAgo} from "../Helpers/helpers";
+
 
 const ChatRoom = ({ room }) => {
-
-    const dateAgo = (data) => {
-        return moment(data).fromNow();
-    }
 
     return(
             <>
@@ -25,7 +22,7 @@ const ChatRoom = ({ room }) => {
                         </div>
                     </div>
                     <div className="chatRoom-right">
-                        <p className="chatRoom-data">{ dateAgo(room.time)}</p>
+                        <p className="chatRoom-data">{ getDateAgo(room.time)}</p>
                     </div>
                 </div>
                 <div className="chatRoom-text">

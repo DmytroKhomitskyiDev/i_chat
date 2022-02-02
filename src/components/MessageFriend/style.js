@@ -3,7 +3,7 @@ import colors from "../../styles/colors";
 
 export const SFriendMessage = styled.div`
     display: flex;
-    margin-bottom: 15px;
+    margin-bottom: 35px;
   
   .messageBody--avatar{
     width: 36px;

@@ -19,9 +19,13 @@ export const SChatFooter = styled.div`
 
   .messageBody--add{
     margin-right: 20px;
+    position: relative;
     
     svg{
       display: block;
+      z-index: 2;
+      position: relative;
+      cursor: pointer;
     }
   }
   .messageBody--sendMessage{
@@ -79,4 +83,33 @@ export const SChatFooter = styled.div`
   .ant-col-16{
     max-width: unset;
   }
+  .messageBody--icon{
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    background: ${colors.BLUE_ICON};
+    box-shadow: 0px 10px 15px rgba(42, 139, 242, 0.2), 0px 7px 25px rgba(42, 139, 242, 0.1), 0px 5px 25px rgba(42, 139, 242, 0.1);
+    border-radius: 50%;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  .messageBody--icon:last-child{
+    margin-bottom: 15px;
+  }
+  .messageBody--add--abs{
+    position: absolute;
+    z-index: -1; 
+    opacity: 0;
+    transition: all .6s;
+    bottom: 0;
+  }
+  .active .messageBody--add--abs{
+    top: unset;
+    z-index: 1;
+    opacity: 1;
+    transition: all .6s;
+    bottom: 40px;
+  }
+  
 `

@@ -1,17 +1,22 @@
 import React from "react";
 import {ReactComponent as checkmark} from "../../images/message/checkmark.svg";
+import {ReactComponent as readMessage} from "../../images/message/all-done.svg";
 import {ReactComponent as dots} from "../../images/message/dots.svg";
 import {SMyMessage} from "./style";
 import MessagePopover from "../MessagePopover/MessagePopover";
+import {getDateAgo} from "../Helpers/helpers";
+import {useSelector} from "react-redux";
 
 const Checkmark = checkmark;
 const Dots = dots;
+const ReadMessage = readMessage;
 
 const MyMessage = ({message,setEditMessage}) => {
-    const date = (date) => {
-       const dateToDay = new Date(date)
-       return `${dateToDay.getHours()} : ${dateToDay.getMinutes()}`
-    }
+
+
+    const getMessageStatus = useSelector( state => state.chat.messageStatus)
+
+
     return (
         <SMyMessage>
             <div className="messageBody--dots my-dots">
@@ -21,9 +26,9 @@ const MyMessage = ({message,setEditMessage}) => {
             </div>
             <div className="my--messageBlock">
                 <p className="my--message">{message.text}</p>
-                <span className="abs_date">{date(message.date)}</span>
+                <span className="abs_date">{getDateAgo(message.date)}</span>
             </div>
-            <Checkmark/>
+            { getMessageStatus && getMessageStatus.room ? (<ReadMessage/>) : <Checkmark/> }
         </SMyMessage>
     )
 }
